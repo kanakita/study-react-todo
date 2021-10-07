@@ -5,7 +5,7 @@ function TodoInput({ onSubmit }) {
     onSubmit( formData.get('todoTitle') );
   }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} name="addForm">
       <input type="text" className="form-control" name="todoTitle" />
     </form>
   );

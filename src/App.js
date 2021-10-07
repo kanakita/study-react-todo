@@ -25,13 +25,42 @@ function App() {
 
   const [todos, setTodos] = useState(initialTodos);
 
+  const [currentFilter, setCurrentFilter] = useState('all');
+
+  /**
+   * TODOを追加する
+   * @param title
+   */
   function addTodo(title) {
     const newTodo = {
       title: title,
       complete: false,
     };
-
     setTodos( [...todos, newTodo] );
+  }
+
+  /**
+   * TODOを更新する
+   * @param {number} index TODOのindex.
+   * @param {boolean} complete TODOの状態
+   */
+  function updateTodo(index, complete) {
+    todos[index].complete = complete;
+    setTodos([...todos]);
+
+  }
+
+  /**
+   * TODOを削除する
+   * @param {number} index TODOのindex
+   */
+  function deleteTodo(index) {
+    todos.splice(index, 1);
+    setTodos([...todos]);
+  }
+
+  function filteredTodos() {
+    return todos;
   }
 
   return (
@@ -39,8 +68,10 @@ function App() {
       <Header />
       <AllComplete />
       <TodoInput onSubmit={addTodo} />
-      <TodoList todos={todos} />
-      <Footer />
+      <TodoList todos={filteredTodos()} onClickCheck={updateTodo} onClickDelete={deleteTodo} />
+      <Footer onClickFilterButton={(filterName) => {
+        setCurrentFilter(filterName)
+      }} activeFilterButtonType={currentFilter} />
     </>
   );
 }

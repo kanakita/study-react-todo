@@ -4,12 +4,16 @@ function ItemCount() {
   );
 }
 
-function FilterButtons() {
+function FilterButtons({onClickFilterButton, activeFilterButtonType}) {
+  function handleClick(event) {
+    onClickFilterButton(event.target.value);
+  }
+
   return (
-    <div className="btn-group" role="group" aria-label="Basic example">
-      <button type="button" className="btn btn-primary">all</button>
-      <button type="button" className="btn btn-primary">active</button>
-      <button type="button" className="btn btn-primary">completed</button>
+    <div className="btn-group" role="group">
+      <button type="button" className={activeFilterButtonType === 'all' ? 'btn btn-primary' : 'btn btn-secondary'} value="all" onClick={handleClick}>all</button>
+      <button type="button" className={activeFilterButtonType === 'active' ? 'btn btn-primary' : 'btn btn-secondary'}  value="active" onClick={handleClick}>active</button>
+      <button type="button" className={activeFilterButtonType === 'completed' ? 'btn btn-primary' : 'btn btn-secondary'}  value="completed" onClick={handleClick}>completed</button>
     </div>
   );
 }
@@ -22,12 +26,12 @@ function CompleteButton() {
   );
 }
 
-function Footer() {
+function Footer({ onClickFilterButton, activeFilterButtonType }) {
   return (
     <>
       <ItemCount />
       <CompleteButton />
-      <FilterButtons />
+      <FilterButtons onClickFilterButton={onClickFilterButton} activeFilterButtonType={activeFilterButtonType} />
     </>
   );
 }
