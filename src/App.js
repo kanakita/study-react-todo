@@ -25,7 +25,7 @@ function App() {
 
   const [todos, setTodos] = useState(initialTodos);
 
-  const [currentFilter, setCurrentFilter] = useState('all');
+  const [currentFilter, setCurrentFilter] = useState('all'); // 'all' ,'completed', 'active'
 
   /**
    * TODOを追加する
@@ -59,8 +59,29 @@ function App() {
     setTodos([...todos]);
   }
 
+  /**
+   *
+   * @returns {({title: string, complete: boolean})[]} フィルタされた Todo の配列
+   */
   function filteredTodos() {
-    return todos;
+    return todos.filter(function (todo) {
+      if (currentFilter === 'completed') {
+        return todo.complete;
+      }
+      else if(currentFilter === 'active'){
+        return ! todo.complete;
+      }
+
+      return true;
+
+    })
+  }
+
+  function deleteCompleteAll() {
+    const notCompleteTodo = todos.filter(function (todo) {
+      return ! todo.complete;
+    })
+    setTodos(notCompleteTodo);
   }
 
   return (
@@ -69,9 +90,14 @@ function App() {
       <AllComplete />
       <TodoInput onSubmit={addTodo} />
       <TodoList todos={filteredTodos()} onClickCheck={updateTodo} onClickDelete={deleteTodo} />
-      <Footer onClickFilterButton={(filterName) => {
-        setCurrentFilter(filterName)
-      }} activeFilterButtonType={currentFilter} />
+      <Footer
+        itemNum={filteredTodos().length}
+        onClickFilterButton={(filterName) => {
+          setCurrentFilter(filterName)
+        }}
+        activeFilterButtonType={currentFilter}
+        onClickDeleteCompleteAll={deleteCompleteAll}
+      />
     </>
   );
 }

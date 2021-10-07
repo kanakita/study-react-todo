@@ -1,6 +1,6 @@
-function ItemCount() {
+function ItemCount({itemNum}) {
   return (
-    <div>1 item</div>
+    <div>{itemNum} item</div>
   );
 }
 
@@ -18,19 +18,23 @@ function FilterButtons({onClickFilterButton, activeFilterButtonType}) {
   );
 }
 
-function CompleteButton() {
+function CompleteButton({onClickDeleteCompleteAll}) {
+  function handleAllDelete() {
+    console.log('completeを全部消す');
+    onClickDeleteCompleteAll();
+  }
   return (
     <div className="btn-group" role="group">
-      <button type="button" className="btn btn-secondary">Clear completed</button>
+      <button type="button" className="btn btn-secondary" onClick={handleAllDelete}>Clear completed</button>
     </div>
   );
 }
 
-function Footer({ onClickFilterButton, activeFilterButtonType }) {
+function Footer({ onClickFilterButton, activeFilterButtonType, itemNum, onClickDeleteCompleteAll }) {
   return (
     <>
-      <ItemCount />
-      <CompleteButton />
+      <ItemCount itemNum={itemNum} />
+      <CompleteButton onClickDeleteCompleteAll={onClickDeleteCompleteAll} />
       <FilterButtons onClickFilterButton={onClickFilterButton} activeFilterButtonType={activeFilterButtonType} />
     </>
   );
