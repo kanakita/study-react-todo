@@ -47,7 +47,6 @@ function App() {
   function updateTodo(index, complete) {
     todos[index].complete = complete;
     setTodos([...todos]);
-
   }
 
   /**
@@ -77,6 +76,9 @@ function App() {
     })
   }
 
+  /**
+   * completedのTODOを全削除する
+   */
   function deleteCompleteAll() {
     const notCompleteTodo = todos.filter(function (todo) {
       return ! todo.complete;
@@ -84,10 +86,14 @@ function App() {
     setTodos(notCompleteTodo);
   }
 
+  function completeAll() {
+    setTodos([...todos]);
+  }
+
   return (
     <>
       <Header />
-      <AllComplete />
+      <AllComplete onChangeCompleteAll={completeAll} todos={todos} />
       <TodoInput onSubmit={addTodo} />
       <TodoList todos={filteredTodos()} onClickCheck={updateTodo} onClickDelete={deleteTodo} />
       <Footer

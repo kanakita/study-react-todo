@@ -20,7 +20,6 @@ function FilterButtons({onClickFilterButton, activeFilterButtonType}) {
 
 function CompleteButton({onClickDeleteCompleteAll}) {
   function handleAllDelete() {
-    console.log('completeを全部消す');
     onClickDeleteCompleteAll();
   }
   return (
