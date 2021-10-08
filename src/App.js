@@ -5,19 +5,25 @@ import TodoList from "./components/TodoList";
 import Footer from "./components/Footer";
 import {useState} from "react";
 
+function getUniqId() {
+  return Math.random().toString(32).substring(2);
+}
 
 const initialTodos = [
   {
     title: 'しごと',
-    complete: false
+    complete: false,
+    id: '123456789'
   },
   {
     title: 'あそぶ',
-    complete: true
+    complete: true,
+    id: 'b'
   },
   {
     title: '買い物',
-    complete: true
+    complete: true,
+    id: 'c'
   }
 ]
 
@@ -32,30 +38,47 @@ function App() {
    * @param title
    */
   function addTodo(title) {
+    const id = getUniqId();
     const newTodo = {
-      title: title,
+      title,
       complete: false,
+      id
     };
     setTodos( [...todos, newTodo] );
   }
 
   /**
    * TODOを更新する
-   * @param {number} index TODOのindex.
+   * @param {string} id TODOのid
    * @param {boolean} complete TODOの状態
    */
-  function updateTodo(index, complete) {
-    todos[index].complete = complete;
-    setTodos([...todos]);
+  function updateTodo(id, complete) {
+
+    const newTodos = todos.map( ( todo ) => {
+      if ( id === todo.id ) {
+        return {
+          ...todo,
+          complete,
+        }
+      }
+      return todo;
+    })
+
+    setTodos(newTodos);
   }
+
+
 
   /**
    * TODOを削除する
-   * @param {number} index TODOのindex
+   * @param {string} id TODOのid
    */
-  function deleteTodo(index) {
-    todos.splice(index, 1);
-    setTodos([...todos]);
+  function deleteTodo(id) {
+    const newTodos = todos.filter(function (todo) {
+      return todo.id !== id;
+    })
+
+    setTodos(newTodos);
   }
 
   /**
@@ -89,7 +112,7 @@ function App() {
   function setStatusAll( status ) {
     const newTodos = todos.map(function (todo) {
       return {
-        title: todo.title,
+        ...todo,
         complete: status,
       }
     })

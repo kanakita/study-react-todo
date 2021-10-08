@@ -2,8 +2,8 @@ function TodoList({todos, onClickCheck, onClickDelete}) {
   return (
     <div className="card">
       <ul className="list-group list-group-flush">
-        {todos.map(({ title, complete}, index) => (
-            <TodoItem key={index} title={title} complete={complete} index={index} onClickCheck={onClickCheck} onClickDelete={onClickDelete}/>
+        {todos.map(({ title, complete, id}) => (
+            <TodoItem key={id} title={title} complete={complete} id={id} onClickCheck={onClickCheck} onClickDelete={onClickDelete}/>
           )
         )}
       </ul>
@@ -11,13 +11,13 @@ function TodoList({todos, onClickCheck, onClickDelete}) {
   );
 }
 
-function TodoItem({title, complete, index, onClickCheck, onClickDelete}) {
+function TodoItem({title, complete, id, onClickCheck, onClickDelete}) {
   function handleChange() {
-    onClickCheck(index, ! complete);
+    onClickCheck(id, ! complete);
   }
 
   function handleDelete() {
-    onClickDelete(index);
+    onClickDelete(id);
   }
   return (
     <li className="list-group-item" >
