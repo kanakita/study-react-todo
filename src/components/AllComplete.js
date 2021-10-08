@@ -1,14 +1,11 @@
 import {useState} from "react";
 
-function AllComplete({onChangeCompleteAll, todos}) {
+function AllComplete({onChangeCompleteAll}) {
   const [checkStatus, setCheckStatus] = useState(false);
 
   function handleChange() {
     setCheckStatus( ! checkStatus );
-    todos.map(function (todo) {
-      todo.complete = ! checkStatus;
-    })
-    onChangeCompleteAll();
+    onChangeCompleteAll(! checkStatus);
   }
 
   return (

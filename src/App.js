@@ -86,14 +86,20 @@ function App() {
     setTodos(notCompleteTodo);
   }
 
-  function completeAll() {
-    setTodos([...todos]);
+  function setStatusAll( status ) {
+    const newTodos = todos.map(function (todo) {
+      return {
+        title: todo.title,
+        complete: status,
+      }
+    })
+    setTodos(newTodos);
   }
 
   return (
     <>
       <Header />
-      <AllComplete onChangeCompleteAll={completeAll} todos={todos} />
+      <AllComplete onChangeCompleteAll={setStatusAll} todos={todos} />
       <TodoInput onSubmit={addTodo} />
       <TodoList todos={filteredTodos()} onClickCheck={updateTodo} onClickDelete={deleteTodo} />
       <Footer
